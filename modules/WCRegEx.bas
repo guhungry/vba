@@ -173,18 +173,8 @@ Private Function CharSet(pattern As String)
         CharSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
     ElseIf pattern = "\s" Then
         CharSet = " " & Chr(9)
-    ElseIf pattern = "\*" Then
-        CharSet = "*"
-    ElseIf pattern = "\+" Then
-        CharSet = "+"
-    ElseIf pattern = "\\" Then
-        CharSet = "\"
-    ElseIf pattern = "\?" Then
-        CharSet = "?"
-    ElseIf pattern = "\[" Then
-        CharSet = "["
-    ElseIf pattern = "\]" Then
-        CharSet = "]"
+    ElseIf Left(pattern, 1) = "\" And Len(pattern) = 2 Then
+        CharSet = Mid(pattern, 2)
     ElseIf WCString.IsStartsWith(pattern, "[") Then
         Dim tempPattern  As String: tempPattern = Mid(pattern, 2, Len(pattern) - 2)
         Dim current  As String: current = ""
@@ -211,12 +201,16 @@ Private Sub UnitTest()
     TestMatch "0113", "1+", "11"
     TestMatch "0123", "12*", "12"
     TestMatch "013", "12*", "1"
+    TestMatch "0121ab3", "1a?b", "1ab"
+    TestMatch "012b3", "2a?b", "2b"
+
+    ' Escape with \
     TestMatch "012a*b3", "a\*b", "a*b"
     TestMatch "012a+b3", "a\+b", "a+b"
     TestMatch "012a\b3", "a\\b", "a\b"
     TestMatch "012a?b3", "a\?b", "a?b"
-    TestMatch "0121ab3", "1a?b", "1ab"
-    TestMatch "012b3", "2a?b", "2b"
+    TestMatch "012a^b3", "a\^b", "a^b"
+    TestMatch "^012a^b3", "\^0", "^0"
 
     ' \s
     TestMatch " ", "\s", " "
