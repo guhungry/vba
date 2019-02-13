@@ -14,6 +14,11 @@ Basic Regular Expression Matcher
 | text    | String | No       | String to match                                         |
 | pattern | String | No       | Regular Expression pattern support only \d, \w, + and * |
 
+```vba
+WCRegEx.Match("* Last Update 12 February 2019.", "\d+ \w+ \d\d\d\d") ' 12 February 2019
+WCRegEx.Match("* Last Update 12/02/2019.", "\d\d/\d\d/\d\d\d\d") ' 12/02/2019
+```
+
 ### WCString.IsSubString()
 Returns True if `search` is substring of `text` else return False
 
@@ -21,3 +26,8 @@ Returns True if `search` is substring of `text` else return False
 |--------|--------|----------|-------------|
 | text   | String | No       | Main string |
 | search | String | No       | Sub string  |
+
+```vba
+WCRegEx.Match("LONG LONG MAN", "LONG") ' True
+WCRegEx.Match("LONG LONG MAN.", "SHORT") ' False
+```
