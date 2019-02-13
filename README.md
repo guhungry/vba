@@ -9,10 +9,10 @@ Import files as Module in `Developer` > `Visual Basic`
 ### WCRegEx.Match()
 Basic Regular Expression Matcher
 
-| NAME    | TYPE   | REQUIRED | DESCRIPTION                                             |
-|---------|--------|----------|---------------------------------------------------------|
-| text    | String | No       | String to match                                         |
-| pattern | String | No       | Regular Expression pattern support only \d, \w, + and * |
+| NAME    | TYPE   | REQUIRED | DESCRIPTION                                                |
+|---------|--------|----------|------------------------------------------------------------|
+| text    | String | No       | String to match                                            |
+| pattern | String | No       | Regular Expression pattern support only \d, \w, ?, + and * |
 
 ```vba
 WCRegEx.Match("* Last Update 12 February 2019.", "\d+ \w+ \d\d\d\d") ' 12 February 2019
