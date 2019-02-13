@@ -6,7 +6,7 @@ Option Explicit
 ' Example WCRegEx.Match("* Last Update 12 February 2019.", "\d+ \w+ \d\d\d\d") will match 12 February 2019
 Public Function Match(text As String, pattern As String)
     Dim result As Variant: result = DoMatch(text, pattern)
-
+    
     If result(0) Then
         Match = Mid(text, result(1), result(2))
     Else
@@ -196,11 +196,18 @@ End Function
 
 Private Sub UnitTest()
     TestMatch "0123", "12", "12"
+
+    ' +
     TestMatch "0123", "1+", "1"
     TestMatch "0113", "1+", "11"
     TestMatch "0113", "1+", "11"
-    TestMatch "0123", "12*", "12"
-    TestMatch "013", "12*", "1"
+
+    ' *
+    TestMatch "0123", "12*3", "123"
+    TestMatch "012223", "12*3", "12223"
+    TestMatch "013", "12*3", "13"
+
+    ' ?
     TestMatch "0121ab3", "1a?b", "1ab"
     TestMatch "012b3", "2a?b", "2b"
 
@@ -211,6 +218,14 @@ Private Sub UnitTest()
     TestMatch "012a?b3", "a\?b", "a?b"
     TestMatch "012a^b3", "a\^b", "a^b"
     TestMatch "^012a^b3", "\^0", "^0"
+
+    ' \d
+    TestMatch " 1", "\d", "1"
+    TestMatch " a", "\d", ""
+
+    ' \w
+    TestMatch " a", "\w", "a"
+    TestMatch " 1", "\w", ""
 
     ' \s
     TestMatch " ", "\s", " "
