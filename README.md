@@ -9,14 +9,29 @@ Import files as Module in `Developer` > `Visual Basic`
 ### WCRegEx.Match()
 Basic Regular Expression Matcher
 
-| NAME    | TYPE   | REQUIRED | DESCRIPTION                                                             |
-|---------|--------|----------|-------------------------------------------------------------------------|
-| text    | String | No       | String to match                                                         |
-| pattern | String | No       | Regular Expression pattern support only \d, \w, \s, [], [^], ?, + and * |
+| NAME    | TYPE   | REQUIRED | DESCRIPTION                |
+|---------|--------|----------|----------------------------|
+| text    | String | No       | String to match            |
+| pattern | String | No       | Regular Expression pattern |
+
+`pattern` supports only support only \d, \w, \s, ^, $, [], [^], ?, + and *
 
 ```vba
 WCRegEx.Match("* Last Update 12 February 2019.", "\d+ \w+ \d\d\d\d") ' 12 February 2019
 WCRegEx.Match("* Last Update 12/02/2019.", "\d\d/\d\d/\d\d\d\d") ' 12/02/2019
+```
+
+### WCRegEx.IsMatch()
+Returns True if `text` match `pattern`'s regular expression else return False
+
+| NAME    | TYPE   | REQUIRED | DESCRIPTION                |
+|---------|--------|----------|----------------------------|
+| text    | String | No       | String to test             |
+| pattern | String | No       | Regular Expression pattern |
+
+```vba
+WCRegEx.IsMatch("* Last Update 12 February 2019.", "\d+ \w+ \d\d\d\d") ' True
+WCRegEx.IsMatch("* Last Update 12-02-2019.", "\d\d/\d\d/\d\d\d\d") ' False
 ```
 
 ### WCString.IsSubString()
