@@ -28,6 +28,6 @@ Returns True if `search` is substring of `text` else return False
 | search | String | No       | Sub string  |
 
 ```vba
-WCRegEx.Match("LONG LONG MAN", "LONG") ' True
-WCRegEx.Match("LONG LONG MAN.", "SHORT") ' False
+WCString.IsSubString("LONG LONG MAN", "LONG") ' True
+WCString.IsSubString("LONG LONG MAN.", "SHORT") ' False
 ```
