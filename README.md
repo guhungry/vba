@@ -14,7 +14,7 @@ Basic Regular Expression Matcher
 | text    | String | No       | String to match            |
 | pattern | String | No       | Regular Expression pattern |
 
-`pattern` supports only support only \d, \w, \s, ^, $, [], [^], ?, + and *
+`pattern` supports only \d, \w, \s, ^, $, [], [^], ?, + and *
 
 ```vba
 WCRegEx.Match("* Last Update 12 February 2019.", "\d+ \w+ \d\d\d\d") ' 12 February 2019
