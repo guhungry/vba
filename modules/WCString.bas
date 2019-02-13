@@ -14,3 +14,17 @@ End Function
 Public Function IsEndsWith(text As String, search As String)
     IsEndsWith = Right(text, Len(search)) = search
 End Function
+
+Private Sub UnitTest()
+    ' IsSubString
+    Debug.Assert (IsSubString("beetest", "eet") = True)
+    Debug.Assert (IsSubString("beetest", "tata") = False)
+    
+    ' IsStartsWith
+    Debug.Assert (IsSubString("beetest", "bee") = True)
+    Debug.Assert (IsSubString("beetest", "tata") = False)
+
+    ' IsEndsWith
+    Debug.Assert (IsEndsWith("beetest", "test") = True)
+    Debug.Assert (IsEndsWith("beetest", "tata") = False)
+End Sub
