@@ -75,15 +75,40 @@ End Function
 Private Function FindNextPattern(pattern As String, index As Integer)
     If (Len(pattern) < index) Then
         FindNextPattern = ""
-    ElseIf (Mid(pattern, index, 1) = "\") Then
+        Exit Function
+    End If
+    
+    Dim first As String: first = Mid(pattern, index, 1)
+    If first = "\" Then
         FindNextPattern = Mid(pattern, index, 2)
+    ElseIf first = "[" Then
+        Dim result As String: result = first
+        Dim current As String: current = first
+        
+        ' Find charset in []
+        Do While Len(pattern) >= index + Len(result) And current <> "]" And current <> ""
+            current = FindNextPattern(pattern, index + Len(result))
+            result = result & current
+        Loop
+        
+        FindNextPattern = result
     Else
-        FindNextPattern = Mid(pattern, index, 1)
+        FindNextPattern = first
     End If
 End Function
 
 Private Function InCharSet(pattern As String, char As String)
-    InCharSet = WCString.IsSubString(CharSet(pattern), char)
+    Dim charList As String: charList = CharSet(pattern)
+    
+    If WCString.IsStartsWith(pattern, "[") And WCString.IsEndsWith(pattern, "]") Then
+        If WCString.IsStartsWith(charList, "^") Then
+            InCharSet = Not WCString.IsSubString(Mid(charList, 2), char)
+        Else
+            InCharSet = WCString.IsSubString(charList, char)
+        End If
+    Else
+        InCharSet = WCString.IsSubString(charList, char)
+    End If
 End Function
 
 Private Function CharSet(pattern As String)
@@ -91,6 +116,8 @@ Private Function CharSet(pattern As String)
         CharSet = "0123456789"
     ElseIf pattern = "\w" Then
         CharSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    ElseIf pattern = "\s" Then
+        CharSet = " " & Chr(9)
     ElseIf pattern = "\*" Then
         CharSet = "*"
     ElseIf pattern = "\+" Then
@@ -99,6 +126,24 @@ Private Function CharSet(pattern As String)
         CharSet = "\"
     ElseIf pattern = "\?" Then
         CharSet = "?"
+    ElseIf pattern = "\[" Then
+        CharSet = "["
+    ElseIf pattern = "\]" Then
+        CharSet = "]"
+    ElseIf WCString.IsStartsWith(pattern, "[") Then
+        Dim tempPattern  As String: tempPattern = Mid(pattern, 2, Len(pattern) - 2)
+        Dim current  As String: current = ""
+        Dim index As Integer: index = 1
+        Dim length As Integer: length = Len(tempPattern)
+        Dim result As String: result = ""
+        
+        ' Expand charset in []
+        Do While length >= index
+            current = FindNextPattern(tempPattern, index)
+            index = index + Len(current)
+            result = result & CharSet(current)
+        Loop
+        CharSet = result
     Else
         CharSet = pattern
     End If
