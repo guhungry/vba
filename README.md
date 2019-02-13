@@ -56,8 +56,8 @@ Returns True if `text` ends with `search` else return False
 | search | String | Yes       | Sub string  |
 
 ```vba
-WCString.IsStartsWith("LONG SHORT MAN.", "MAN") ' True
-WCString.IsStartsWith("LONG SHORT MAN", "LONG") ' False
+WCString.IsEndsWith("LONG SHORT MAN.", "MAN") ' True
+WCString.IsEndsWith("LONG SHORT MAN", "LONG") ' False
 ```
 
 
