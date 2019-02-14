@@ -194,13 +194,18 @@ Private Function CharSet(pattern As String)
     End If
 End Function
 
-Private Sub UnitTest()
+Private Sub RegExUnitTests()
+    MatchUnitTest
+    IsMatchUnitTest
+End Sub
+
+Private Sub MatchUnitTest()
     TestMatch "0123", "12", "12"
 
     ' +
     TestMatch "0123", "1+", "1"
     TestMatch "0113", "1+", "11"
-    TestMatch "0113", "1+", "11"
+    TestMatch "0113", "2+", ""
 
     ' *
     TestMatch "0123", "12*3", "123"
@@ -249,6 +254,65 @@ Private Sub UnitTest()
     ' $
     TestMatch "beetest", "est$", "est"
     TestMatch "beetest", "ee$", ""
+End Sub
+
+Private Sub IsMatchUnitTest()
+    Debug.Assert (IsMatch("0123", "12") = True)
+
+    ' +
+    Debug.Assert (IsMatch("0123", "1+") = True)
+    Debug.Assert (IsMatch("0113", "1+") = True)
+    Debug.Assert (IsMatch("0113", "2+") = False)
+
+    ' *
+    Debug.Assert (IsMatch("0123", "12*3") = True)
+    Debug.Assert (IsMatch("012223", "12*3") = True)
+    Debug.Assert (IsMatch("013", "12*3") = True)
+    Debug.Assert (IsMatch("4d", "2*") = True)
+
+    ' ?
+    Debug.Assert (IsMatch("0121ab3", "1a?b") = True)
+    Debug.Assert (IsMatch("012b3", "2a?b") = True)
+    Debug.Assert (IsMatch("a", "a?") = True)
+    Debug.Assert (IsMatch("", "a?") = True)
+
+    ' Escape with \
+    Debug.Assert (IsMatch("012a*b3", "a\*b") = True)
+    Debug.Assert (IsMatch("012a+b3", "a\+b") = True)
+    Debug.Assert (IsMatch("012a\b3", "a\\b") = True)
+    Debug.Assert (IsMatch("012a?b3", "a\?b") = True)
+    Debug.Assert (IsMatch("012a^b3", "a\^b") = True)
+
+    ' \d
+    Debug.Assert (IsMatch("1", "\d") = True)
+    Debug.Assert (IsMatch("a", "\d") = False)
+
+    ' \w
+    Debug.Assert (IsMatch("a", "\w") = True)
+    Debug.Assert (IsMatch("1", "\w") = False)
+
+    ' \s
+    Debug.Assert (IsMatch(" ", "\s") = True)
+
+    ' []
+    Debug.Assert (IsMatch("a", "[bc]") = False)
+    Debug.Assert (IsMatch("b", "[bc]") = True)
+    Debug.Assert (IsMatch("1", "[\d]") = True)
+    Debug.Assert (IsMatch("a", "[\d]") = False)
+
+    ' [^]
+    Debug.Assert (IsMatch("a", "[^bc]") = True)
+    Debug.Assert (IsMatch("b", "[^bc]") = False)
+    Debug.Assert (IsMatch("a", "[^\d]") = True)
+    Debug.Assert (IsMatch("1", "[^\d]") = False)
+
+    ' ^
+    Debug.Assert (IsMatch("beetest", "^bee") = True)
+    Debug.Assert (IsMatch("beetest", "^ee") = False)
+
+    ' $
+    Debug.Assert (IsMatch("beetest", "est$") = True)
+    Debug.Assert (IsMatch("beetest", "ee$") = False)
 End Sub
 
 Private Sub TestMatch(text As String, pattern As String, expected As String)
