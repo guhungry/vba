@@ -6,6 +6,18 @@ Import files as Module in `Developer` > `Visual Basic`
 
 ## Usage
 
+### WCDate.ExtractDate()
+Extract Date from text. Supports date with 'dd MMMM yyyy' and 'dd/MM/yyyy' format
+
+| NAME    | TYPE   | REQUIRED  | DESCRIPTION                |
+|---------|--------|-----------|----------------------------|
+| text    | String | Yes       | Text with date             |
+
+```vba
+WCDate.ExtractDate("* Last Update 12 February 2019.", "\d+ \w+ \d\d\d\d") ' 12/2/19
+WCDate.ExtractDate("* Last Update 12/02/2019.") ' 12/2/19
+```
+
 ### WCRegEx.Match()
 Basic Regular Expression Matcher
 
