@@ -22,6 +22,7 @@ WCRegEx.Match("* Last Update 12/02/2019.", "\d\d/\d\d/\d\d\d\d") ' 12/02/2019
 ```
 
 ### WCRegEx.IsMatch()
+Basic Regular Expression Tester
 Returns True if `text` match `pattern`'s regular expression else return False
 
 | NAME    | TYPE   | REQUIRED  | DESCRIPTION                |
