@@ -6,7 +6,7 @@ Option Explicit
 ' Example WCRegEx.Match("* Last Update 12 February 2019.", "\d+ \w+ \d\d\d\d") will match 12 February 2019
 Public Function Match(text As String, pattern As String)
     Dim result As Variant: result = DoMatch(text, pattern)
-    
+
     If result(0) Then
         Match = Mid(text, result(1), result(2))
     Else
@@ -118,7 +118,7 @@ Private Function DoSubMatch(text As String, pattern As String, checkStart As Boo
 End Function
 
 Private Function FindActivePattern(current As String, last As String, nextPattern As String, index As Integer)
-    If current = "+" Then
+    If WCString.IsSubString("+*", current) Then
         FindActivePattern = last
     ElseIf current = "^" And index = 1 Then
         FindActivePattern = nextPattern
