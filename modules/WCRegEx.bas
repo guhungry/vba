@@ -55,7 +55,7 @@ Private Function DoSubMatch(text As String, pattern As String, checkStart As Boo
     Dim lastPattern As String: lastPattern = ""
     Dim lengthPattern As Integer: lengthPattern = Len(pattern)
 
-    Do While indexPattern <= lengthPattern And indexText <= lengthText
+    Do
         currentText = Mid(text, indexText, 1)
         currentPattern = FindNextPattern(pattern, indexPattern)
         nextPattern = FindNextPattern(pattern, indexPattern + Len(currentPattern))
@@ -97,7 +97,7 @@ Private Function DoSubMatch(text As String, pattern As String, checkStart As Boo
             currentPattern = ""
             lastPattern = ""
         End If
-    Loop
+    Loop While indexPattern <= lengthPattern And indexText <= lengthText
 
     Dim result(0 To 3) As Variant
     result(0) = indexPattern > lengthPattern
@@ -154,6 +154,11 @@ End Function
 
 Private Function InCharSet(pattern As String, char As String)
     Dim charList As String: charList = CharSet(pattern)
+
+    If char = "" Then
+        InCharSet = False
+        Exit Function
+    End If
 
     If WCString.IsStartsWith(pattern, "[") And WCString.IsEndsWith(pattern, "]") Then
         If WCString.IsStartsWith(charList, "^") Then
