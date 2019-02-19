@@ -19,7 +19,7 @@ Private Sub UnitTest()
     ' IsSubString
     Debug.Assert (IsSubString("beetest", "eet") = True)
     Debug.Assert (IsSubString("beetest", "tata") = False)
-    
+
     ' IsStartsWith
     Debug.Assert (IsSubString("beetest", "bee") = True)
     Debug.Assert (IsSubString("beetest", "tata") = False)

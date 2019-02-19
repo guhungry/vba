@@ -8,7 +8,7 @@ End Function
 
 Private Function FindDate(text As String)
     Dim value As String: value = WCRegEx.Match(text, "\d\d? \w+ \d\d\d\d")
-    
+
     If value = "" Then
         value = WCRegEx.Match(text, "\d\d/\d\d/\d\d\d\d")
         value = ToShortMonth(value)
@@ -35,7 +35,7 @@ Private Sub UnitTest()
     ' dd MMM yyyy
     TestExtractDate "14 May 1984", "14/05/84"
     TestExtractDate "prefix 14 May 1984 suffix", "14/05/84"
-    
+
     ' dd/MM/yyyy
     TestExtractDate "14/05/1984", "14/05/84"
     TestExtractDate " prefix 14/05/1994  noise", "14/05/94"
