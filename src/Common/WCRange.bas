@@ -106,3 +106,18 @@ Public Sub DeleteNames(value As Names)
         n.Delete
     Next n
 End Sub
+
+Sub SetComment(myCell As Range, value As String)
+    With myCell
+        If Not .comment Is Nothing Then .comment.Delete
+        With .AddComment
+            .text value
+            .Visible = True
+            ' Resize Comment
+            If os.isWindows Then
+                .Shape.TextFrame.AutoSize = True
+            End If
+            .Visible = False
+        End With
+    End With
+End Sub
