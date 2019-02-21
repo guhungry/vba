@@ -1,15 +1,15 @@
 Attribute VB_Name = "OS"
 
 Public Function isMac()
-    isMac = isMac("macintosh")
+    isMac = isOS("macintosh")
 End Function
 
 Public Function isWindows()
     isWindows = isOS("windows")
 End Function
 
-Private Function isOS(name As String)
-    isOS = WCString.IsStartsWith(os(), name)
+Private Function isOS(Name As String)
+    isOS = WCString.IsStartsWith(os(), Name)
 End Function
 
 Private Function os()
